@@ -1,0 +1,5 @@
+/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/obj/x86/Debug/.NETFramework,Version=v4.5.AssemblyAttribute.cs
+/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/bin/Debug/DannyJoostCompiler.exe.mdb
+/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/bin/Debug/DannyJoostCompiler.exe
+/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/obj/x86/Debug/DannyJoostCompiler.exe
+/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/obj/x86/Debug/DannyJoostCompiler.exe.mdb
