@@ -39,6 +39,8 @@
     <Compile Include="Statements\WhileStatement.cs" />
     <Compile Include="Statements\IfStatement.cs" />
     <Compile Include="Statements\EmptyStatement.cs" />
+    <Compile Include="Tokenizer.cs" />
+    <Compile Include="TokenEnumeration.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

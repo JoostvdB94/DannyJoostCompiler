@@ -7,9 +7,8 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-			//string[] classes = ["while"]
-			BaseStatement.create("while").identify();
-			BaseStatement.create("vfasjkbljhas").identify();
+			Tokenizer tokenizer = new Tokenizer ("while (true){int waarde = 3;}");
+			tokenizer.tokenize (tokenizer.Code.GetEnumerator());
 		}
 	}
 }

@@ -13,6 +13,15 @@ namespace DannyJoostCompiler.Statements
 		{
 			Console.Write ("I'm a Empty Statement.. Use me for non-existant classes!");
 		}
+
+		#region implemented abstract members of BaseStatement
+
+		public override CharEnumerator SetupParameters (CharEnumerator inputEnummerator)
+		{
+			throw new NotImplementedException ();
+		}
+
+		#endregion
 	}
 }
 
