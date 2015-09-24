@@ -5,6 +5,7 @@ namespace DannyJoostCompiler
 	public enum TokenEnumeration
 	{
 		Unknown,
+		Identifier,
 		Word,
 		Integer,
 		While,

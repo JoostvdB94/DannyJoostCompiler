@@ -1,5 +1,7 @@
 ﻿using System;
-using DannyJoostCompiler.Statements;
+using System.IO;
+using System.Text;
+
 
 namespace DannyJoostCompiler
 {
@@ -7,8 +9,8 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-			Tokenizer tokenizer = new Tokenizer ("while (true){int waarde = 3;}");
-			tokenizer.tokenize (tokenizer.Code.GetEnumerator());
+			Tokenizer tokenizer = new Tokenizer (new StreamReader(new MemoryStream(Encoding.UTF8.GetBytes("if(){}else if(){}else{}"))));
+			tokenizer.tokenize ();
 		}
 	}
 }
