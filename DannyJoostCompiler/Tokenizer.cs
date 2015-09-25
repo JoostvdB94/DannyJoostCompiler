@@ -55,47 +55,57 @@ namespace DannyJoostCompiler
 			int lineNumber = 1;
 			while (!CodeReader.EndOfStream) {
 				code = CodeReader.ReadLine ();
-				//tokenizeLine (code.GetEnumerator (),lineNumber);
-				tokenizeLine(code.GetEnumerator(),lineNumber);
+				tokenizeLine(code.ToCharArray(),lineNumber);
 				lineNumber ++;
 			}
 			return null;
 		}
 
-		void tokenizeLine (CharEnumerator inputEnummerator, int lineNumber)
+		void tokenizeLine (char[] input, int lineNumber)
 		{
 			string searchString = "";
-			while (inputEnummerator.MoveNext ()) {
-                searchString += inputEnummerator.Current;
-                if (searchString.Length > 0) {
-                    if(tokens.ContainsKey(searchString))
-                    {
-                        TokenEnumeration foundEnumeration = dictionaryContainsLongestKey((CharEnumerator)inputEnummerator.Clone(), searchString);
-                        searchString = "";
-                    }
-				}
-			}
+            int lineIndex = 0;
+			while (lineIndex < input.Length) {
+                
+                searchString += input[lineIndex];
+                if (tokens.ContainsKey(searchString))
+                {
+                    TokenEnumeration foundEnumeration = dictionaryContainsLongestKey(input, searchString, lineIndex);
+
+                    Console.WriteLine(foundEnumeration);
+                    searchString = "";
+                }
+                lineIndex++;
+            }
 		}
 
-		TokenEnumeration dictionaryContainsLongestKey (CharEnumerator inputEnumerator,string searchstring)
+		TokenEnumeration dictionaryContainsLongestKey (char[] input,string searchstring, int lineIndex)
 		{
-			if (inputEnumerator.MoveNext ()) {
-				string extendedSearchString = searchstring + inputEnumerator.Current;
+              lineIndex++;
+			if (input.Length > lineIndex) {
+                string extendedSearchString = searchstring + input[lineIndex];
+                
 				if (tokens.Keys.Any(k => k.StartsWith(extendedSearchString))) {
-					TokenEnumeration foundEnumeration = dictionaryContainsLongestKey (inputEnumerator, extendedSearchString);
+					TokenEnumeration foundEnumeration = dictionaryContainsLongestKey (input, extendedSearchString, lineIndex);
 					if (foundEnumeration == TokenEnumeration.Unknown) {
-						return TokenEnumeration.Unknown;
-					} else {
-						return foundEnumeration;
+                       return TokenEnumeration.Unknown;
 					}
+                   
+
+                    return foundEnumeration;
 				} else
                 {
                     TokenEnumeration result;
                     tokens.TryGetValue(searchstring, out result);
                     return result;
                 }
-			}
-			return TokenEnumeration.Unknown;
+
+			} else
+            {
+                TokenEnumeration result;
+                tokens.TryGetValue(searchstring, out result);
+                return result;
+            }
 		}
 	}
 }
