@@ -9,8 +9,9 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-			Tokenizer tokenizer = new Tokenizer (new StreamReader(new MemoryStream(Encoding.UTF8.GetBytes("if(){}else if(){}else{}"))));
+			Tokenizer tokenizer = new Tokenizer (new StreamReader(Environment.CurrentDirectory + @"\Language.txt"));
 			tokenizer.tokenize ();
+            Console.ReadKey();
 		}
 	}
 }
