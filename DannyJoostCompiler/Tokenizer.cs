@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using C5;
 using System.IO;
 using System.Linq;
 
@@ -22,10 +21,11 @@ namespace DannyJoostCompiler
 			tokens.Add ("else", TokenEnumeration.Else);
 			tokens.Add ("do", TokenEnumeration.Do);
 			tokens.Add ("while", TokenEnumeration.While);
-			tokens.Add ("for", TokenEnumeration.For);
+            tokens.Add("for", TokenEnumeration.For);
+            tokens.Add(" ", TokenEnumeration.WhiteSpace);
 
-			//brackets
-			tokens.Add ("(", TokenEnumeration.OpenEllips);
+            //brackets
+            tokens.Add ("(", TokenEnumeration.OpenEllips);
 			tokens.Add (")", TokenEnumeration.CloseEllips);
 			tokens.Add ("{", TokenEnumeration.OpenBracket);
 			tokens.Add ("}", TokenEnumeration.ClosedBracket);
@@ -53,13 +53,12 @@ namespace DannyJoostCompiler
 		public Stack<BaseToken> tokenize(){
 			string code = "";
 			int lineNumber = 1;
-			while (CodeReader.EndOfStream) {
+			while (!CodeReader.EndOfStream) {
 				code = CodeReader.ReadLine ();
 				//tokenizeLine (code.GetEnumerator (),lineNumber);
-				tokenizeLine("if(){}else if(){}else{}".GetEnumerator(),lineNumber);
+				tokenizeLine(code.GetEnumerator(),lineNumber);
 				lineNumber ++;
 			}
-			string searchString = "";
 			return null;
 		}
 
@@ -67,13 +66,14 @@ namespace DannyJoostCompiler
 		{
 			string searchString = "";
 			while (inputEnummerator.MoveNext ()) {
-				if (searchString.Length > 0) {
-					TokenEnumeration foundEnumeration =  dictionaryContainsLongestKey ((CharEnumerator)inputEnummerator.Clone (), searchString);
-					if (foundEnumeration != TokenEnumeration.Unknown) {
-						Console.WriteLine ("We found" + foundEnumeration.ToString ());
-					}
+                searchString += inputEnummerator.Current;
+                if (searchString.Length > 0) {
+                    if(tokens.ContainsKey(searchString))
+                    {
+                        TokenEnumeration foundEnumeration = dictionaryContainsLongestKey((CharEnumerator)inputEnummerator.Clone(), searchString);
+                        searchString = "";
+                    }
 				}
-				searchString += inputEnummerator.Current;
 			}
 		}
 
@@ -81,14 +81,19 @@ namespace DannyJoostCompiler
 		{
 			if (inputEnumerator.MoveNext ()) {
 				string extendedSearchString = searchstring + inputEnumerator.Current;
-				if (tokens.Keys.Where(k => k.StartsWith(extendedSearchString)).FirstOrDefault() != null) {
+				if (tokens.Keys.Any(k => k.StartsWith(extendedSearchString))) {
 					TokenEnumeration foundEnumeration = dictionaryContainsLongestKey (inputEnumerator, extendedSearchString);
 					if (foundEnumeration == TokenEnumeration.Unknown) {
 						return TokenEnumeration.Unknown;
 					} else {
 						return foundEnumeration;
 					}
-				}
+				} else
+                {
+                    TokenEnumeration result;
+                    tokens.TryGetValue(searchstring, out result);
+                    return result;
+                }
 			}
 			return TokenEnumeration.Unknown;
 		}
