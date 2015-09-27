@@ -8,12 +8,14 @@ namespace DannyJoostCompiler
 	public class Tokenizer
 	{
 		public StreamReader CodeReader{ get; private set;}
+		private Queue<TokenEnumeration> tokenStack;
 		private Dictionary<string,TokenEnumeration> tokens;
 
 		public Tokenizer (StreamReader input)
 		{
 			this.CodeReader = input;
 			tokens = new Dictionary<string, TokenEnumeration>();
+			tokenStack = new Queue<TokenEnumeration> ();
 
 			//reserved words
 			tokens.Add ("if", TokenEnumeration.If);
@@ -84,7 +86,7 @@ namespace DannyJoostCompiler
 						lineIndex--;
 					}
 					tokens.TryGetValue (searchString, out result);
-					Console.WriteLine (searchString + ": " + result);
+					tokenStack.Enqueue (result);
                     searchString = "";
                 }
                 lineIndex++;

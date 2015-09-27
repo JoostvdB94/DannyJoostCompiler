@@ -11,6 +11,7 @@ namespace DannyJoostCompiler
 		{
 			Tokenizer tokenizer = new Tokenizer (new StreamReader(Environment.CurrentDirectory + @"/Language.txt"));
 			tokenizer.tokenize ();
+			Console.WriteLine ("Tokenization complete!");
             Console.ReadKey();
 		}
 	}

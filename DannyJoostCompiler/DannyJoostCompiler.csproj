@@ -45,6 +45,11 @@
     <Compile Include="Conditions\EqualsCondition.cs" />
     <Compile Include="Nodes\ConditionalJumpNode.cs" />
     <Compile Include="Tokens\BaseToken.cs" />
+    <Compile Include="Tokens\WhileToken.cs" />
+    <Compile Include="Tokens\IfToken.cs" />
+    <Compile Include="Tokens\ElseToken.cs" />
+    <Compile Include="Tokens\ElseIfToken.cs" />
+    <Compile Include="Tokens\ForToken.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
