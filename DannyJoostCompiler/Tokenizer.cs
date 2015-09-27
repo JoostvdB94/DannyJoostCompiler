@@ -70,41 +70,24 @@ namespace DannyJoostCompiler
                 searchString += input[lineIndex];
                 if (tokens.ContainsKey(searchString))
                 {
-                    TokenEnumeration foundEnumeration = dictionaryContainsLongestKey(input, searchString, lineIndex);
-
-                    Console.WriteLine(foundEnumeration);
+					string extendedSearchString = searchString;
+					TokenEnumeration result;
+					while (input.Length > lineIndex + 1 && tokens.Any (t => t.Key.StartsWith (extendedSearchString))) {
+						searchString = extendedSearchString;
+						lineIndex++;
+						extendedSearchString += input [lineIndex];
+					}
+					if (!searchString.Equals(" ")) {
+						searchString = searchString.Trim ();
+					}
+					if (!extendedSearchString.Equals(searchString)) {
+						lineIndex--;
+					}
+					tokens.TryGetValue (searchString, out result);
+					Console.WriteLine (searchString + ": " + result);
                     searchString = "";
                 }
                 lineIndex++;
-            }
-		}
-
-		TokenEnumeration dictionaryContainsLongestKey (char[] input,string searchstring, int lineIndex)
-		{
-              lineIndex++;
-			if (input.Length > lineIndex) {
-                string extendedSearchString = searchstring + input[lineIndex];
-                
-				if (tokens.Keys.Any(k => k.StartsWith(extendedSearchString))) {
-					TokenEnumeration foundEnumeration = dictionaryContainsLongestKey (input, extendedSearchString, lineIndex);
-					if (foundEnumeration == TokenEnumeration.Unknown) {
-                       return TokenEnumeration.Unknown;
-					}
-                   
-
-                    return foundEnumeration;
-				} else
-                {
-                    TokenEnumeration result;
-                    tokens.TryGetValue(searchstring, out result);
-                    return result;
-                }
-
-			} else
-            {
-                TokenEnumeration result;
-                tokens.TryGetValue(searchstring, out result);
-                return result;
             }
 		}
 	}
