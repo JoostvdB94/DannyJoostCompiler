@@ -15,12 +15,15 @@ namespace DannyJoostCompiler
         {
             TokenRegex = new Dictionary<TokenEnumeration, string>();
 
+            RegisterToken(TokenEnumeration.QuotedString, "\".*\"");
+            RegisterToken(TokenEnumeration.QuotedCharacter, "\'.\'");
             RegisterToken(TokenEnumeration.If, "\\bif\\b");
             RegisterToken(TokenEnumeration.Else, "\\belse\\b");
             RegisterToken(TokenEnumeration.ClosedBracket, "}");
             RegisterToken(TokenEnumeration.OpenBracket, "\\{");
             RegisterToken(TokenEnumeration.OpenEllips, "\\(");
             RegisterToken(TokenEnumeration.CloseEllips, "\\)");
+            RegisterToken(TokenEnumeration.Separator, ",");
             RegisterToken(TokenEnumeration.Equals, "==");
             RegisterToken(TokenEnumeration.Assignment, "=");
             RegisterToken(TokenEnumeration.LesserThan, "<");
@@ -28,8 +31,10 @@ namespace DannyJoostCompiler
             RegisterToken(TokenEnumeration.Number, "\\d+");
             RegisterToken(TokenEnumeration.String, "\\bstring\\b");
             RegisterToken(TokenEnumeration.While, "\\bwhile\\b");
-            RegisterToken(TokenEnumeration.Identifier, "\\w+");
+            RegisterToken(TokenEnumeration.FunctionCall, "\\w+(?=\\s*\\()");
             RegisterToken(TokenEnumeration.WhiteSpace, "\\s+");
+            RegisterToken(TokenEnumeration.Identifier, "\\w+");
+
             RegisterToken(TokenEnumeration.Unknown, "\\W");
         }
 
@@ -118,6 +123,7 @@ namespace DannyJoostCompiler
                                 {
                                     leftPartner = statementStack.Pop();
                                     leftPartner.Partner = token;
+
                                 }
                             }
 

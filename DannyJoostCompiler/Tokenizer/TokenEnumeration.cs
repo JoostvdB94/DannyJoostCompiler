@@ -42,7 +42,10 @@ namespace DannyJoostCompiler
 		Equals,
 		Not,
 		NotEquals,
-		ElseIf
-	}
+		ElseIf,
+        FunctionCall,
+        QuotedCharacter,
+        Separator
+    }
 }
 
