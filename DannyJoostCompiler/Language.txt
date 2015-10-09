@@ -1,7 +1,8 @@
-﻿if() {
-
-} else if() {
-
-} else {
-
+﻿int x = 0
+while(x < 3) {
+	if (x == 1) { 
+		
+	} else {
+		
+	}
 }

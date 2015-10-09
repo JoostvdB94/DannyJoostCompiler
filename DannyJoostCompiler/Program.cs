@@ -9,9 +9,12 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-			Tokenizer tokenizer = new Tokenizer (new StreamReader(Environment.CurrentDirectory + @"/Language.txt"));
-			tokenizer.tokenize ();
-			Console.WriteLine ("Tokenization complete!");
+			Tokenizer tokenizer = new Tokenizer();
+            var lines = (File.ReadAllLines(Environment.CurrentDirectory + @"/Language.txt"));
+            foreach (var item in tokenizer.Tokenize(lines))
+            {
+               Console.WriteLine(item.ToString());
+            }
             Console.ReadKey();
 		}
 	}
