@@ -1,14 +1,8 @@
-﻿<Properties StartupItem="DannyJoostCompiler/DannyJoostCompiler.csproj">
+﻿<Properties StartupItem="DannyJoostCompiler/DannyJoostCompiler.csproj" RefactoringSettings.EnableRefactorings="True">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
   <MonoDevelop.Ide.Workbench ActiveDocument="DannyJoostCompiler/Tokenizer.cs">
     <Files>
-      <File FileName="DannyJoostCompiler/Program.cs" Line="10" Column="46" />
-      <File FileName="DannyJoostCompiler/Statements/BaseStatement.cs" Line="10" Column="59" />
-      <File FileName="DannyJoostCompiler/Statements/WhileStatement.cs" Line="12" Column="18" />
-      <File FileName="DannyJoostCompiler/Statements/IfStatement.cs" Line="21" Column="28" />
-      <File FileName="DannyJoostCompiler/Statements/EmptyStatement.cs" Line="23" Column="4" />
-      <File FileName="DannyJoostCompiler/Tokenizer.cs" Line="86" Column="2" />
-      <File FileName="DannyJoostCompiler/TokenEnumeration.cs" Line="10" Column="9" />
+      <File FileName="DannyJoostCompiler/Tokenizer.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
