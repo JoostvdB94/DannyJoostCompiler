@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DannyJoostCompiler.DictionaryExtension;
 
 namespace DannyJoostCompiler.VirtualMachine.Commands
 {
@@ -10,7 +11,11 @@ namespace DannyJoostCompiler.VirtualMachine.Commands
     {
         public void Execute(UltimateVirtualMachine vm, List<Token> parameters)
         {
-            vm.Variables.Add(parameters[0].Value, vm.ReturnValue.Copy());
+			if (vm.Variables.ContainsKey (parameters [0].Value)) {
+				vm.Variables.GetValue (parameters [0].Value).Value = vm.ReturnValue.Copy ();
+			} else {
+				vm.Variables.Add (parameters [0].Value, vm.ReturnValue.Copy ());
+			}
         }
     }
 }
