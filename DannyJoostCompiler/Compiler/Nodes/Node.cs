@@ -1,14 +1,25 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DannyJoostCompiler
 {
-	public class Node
+	public abstract class Node
 	{
+
+        public string Identifier { get; set; }
+
 		public Node ()
 		{
 		}
 
-		public abstract void execute ();
+        public virtual void SetupParameters(List<string> parameters)
+        {
+
+        }
+
+		public abstract void Execute ();
+
+        public abstract Node Copy();
 	}
 }
 

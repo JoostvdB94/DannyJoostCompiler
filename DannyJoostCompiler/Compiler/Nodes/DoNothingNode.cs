@@ -8,7 +8,12 @@ namespace DannyJoostCompiler
 		{
 		}
 
-		public override void execute ()
+        public override Node Copy()
+        {
+            return (DoNothingNode)MemberwiseClone();
+        }
+        
+        public override void Execute ()
 		{
 			
 		}

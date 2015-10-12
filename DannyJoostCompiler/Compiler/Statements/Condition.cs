@@ -12,19 +12,19 @@ namespace DannyJoostCompiler
 			currentVariable = 1;
 		}
 
-		public override LinkedList<Node> Compile (ref LinkedListNode<Token> currentToken)
+		public override LinkedList<Node> Compile (LinkedListNode<Token> currentToken)
 		{
-			Token LeftHandValue = currentToken.Previous;
-			Token RightHandValue = currentToken.Next;
+			Token LeftHandValue = currentToken.Previous.Value;
+			Token RightHandValue = currentToken.Next.Value;
 			Token Operator = currentToken.Value;
-			this.compiledStatement.AddLast (NodeFactory.create ("DoNothing"));
+			this.compiledStatement.AddLast (NodeFactory.create("DoNothing"));
 			if (LeftHandValue.Type == TokenEnumeration.Number) {
-				this.compiledStatement.AddLast (new DirectFunctionCall ("C2R", LeftHandValue.Value.ToString ()));
-				this.compiledStatement.AddLast (new DirectFunctionCall ("R2V", "$001"));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "C2R", new List<string>() { LeftHandValue.Value }));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "R2V", new List<string>() { "$001" }));
 			}
 			if (RightHandValue.Type == TokenEnumeration.Number) {
-				this.compiledStatement.AddLast (new DirectFunctionCall ("C2R", RightHandValue.Value.ToString ()));
-				this.compiledStatement.AddLast (new DirectFunctionCall ("R2V", "$002"));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "C2R", new List<string>() { RightHandValue.Value.ToString() }));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "R2V", new List<string>() { "$002" }));
 			}
 
 			FunctionCall operatorFunction;
@@ -54,14 +54,16 @@ namespace DannyJoostCompiler
 			}
 			
 			this.compiledStatement.AddLast (operatorFunction);
-			this.compiledStatement.AddLast (new DirectFunctionCall ("R2V", "$"+currentVariable.ToString("D3")));
-			//Do Nothing?
+			this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "R2V", new List<string>() { "$" + currentVariable.ToString("D3") }));
+            //Do Nothing?
+
+            return compiledStatement;
 		}
 
 		private void AddNodesForToken(Token token){
 			if (token.Type == TokenEnumeration.Number) {
-				this.compiledStatement.AddLast (new DirectFunctionCall ("C2R", token.Value.ToString ()));
-				this.compiledStatement.AddLast (new DirectFunctionCall ("R2V", "$"+currentVariable.ToString("D3")));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "C2R", new List<string>() { token.Value.ToString() }));
+				this.compiledStatement.AddLast (NodeFactory.create("DirectFunctionCall", "R2V", new List<string>() { "$" + currentVariable.ToString("D3") }));
 			}
 			if (token.Type == TokenEnumeration.Identifier) {
 				

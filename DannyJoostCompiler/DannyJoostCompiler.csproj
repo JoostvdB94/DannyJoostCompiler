@@ -58,10 +58,6 @@
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>
     <Folder Include="Factories\" />
-    <Folder Include="Compiler\" />
-    <Folder Include="Compiler\Statements\" />
-    <Folder Include="Compiler\Nodes\" />
-    <Folder Include="Compiler\Nodes\FunctionCalls\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Language.txt">

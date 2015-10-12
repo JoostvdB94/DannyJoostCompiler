@@ -14,14 +14,20 @@ namespace DannyJoostCompiler
 			body = new LinkedList<Node> ();
 
 			compiledStatement.AddLast(NodeFactory.create("DoNothing"));
-			compiledStatement.AddLast(condition);
+            foreach(var node in condition)
+            {
+                compiledStatement.AddLast(node);
+            }
 			compiledStatement.AddLast(NodeFactory.create("ConditionalJump")); // De body komt dus rechtstreeks na de conditionalJumpNode (dus op de .Next property)
-			compiledStatement.AddLast(body);
-			compiledStatement.AddLast(NodeFactory.create("JumpBack"));
+            foreach (var node in body)
+            {
+                compiledStatement.AddLast(node);
+            }
+            compiledStatement.AddLast(NodeFactory.create("JumpBack"));
 			compiledStatement.AddLast(NodeFactory.create("DoNothing"));
 		}
 
-		public override LinkedList<Node> Compile (ref LinkedListNode<Token> currentToken)
+		public override LinkedList<Node> Compile (LinkedListNode<Token> currentToken)
 		{
 
 			int whileLevel = currentToken.Value.Level;
@@ -29,12 +35,14 @@ namespace DannyJoostCompiler
 			{
 				new TokenExpectation(whileLevel, TokenEnumeration.While), 
 				new TokenExpectation(whileLevel, TokenEnumeration.OpenEllips),
-				new TokenExpectation(whileLevel + 1, TokenEnumeration.ANY), // Condition
+				new TokenExpectation(whileLevel + 1, TokenEnumeration.Unknown), // Condition
 				new TokenExpectation(whileLevel, TokenEnumeration.CloseEllips),
 				new TokenExpectation(whileLevel, TokenEnumeration.OpenBracket), 
-				new TokenExpectation(whileLevel + 1, TokenEnumeration.ANY), // Body
-				new TokenExpectation(whileLevel, TokenEnumeration.BRACKET_CLOSE)
+				new TokenExpectation(whileLevel + 1, TokenEnumeration.Unknown), // Body
+				new TokenExpectation(whileLevel, TokenEnumeration.ClosedBracket)
 			};
+
+            return null;
 		}
 	}
 }

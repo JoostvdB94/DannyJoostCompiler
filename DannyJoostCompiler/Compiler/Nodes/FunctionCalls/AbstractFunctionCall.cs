@@ -5,12 +5,13 @@ namespace DannyJoostCompiler
 {
 	public abstract class AbstractFunctionCall:Node
 	{
-		protected string functionName;
-		protected List<string> parameters;
+		public List<string> Parameters { protected get; set; }
 
-		public AbstractFunctionCall(string functionName){
-			this.functionName = functionName;
-			this.parameters = new List<string> ();
+        public AbstractFunctionCall() { }
+
+		public AbstractFunctionCall(string identifier){
+			Identifier = identifier;
+			Parameters = new List<string> ();
 		}
 
 	}

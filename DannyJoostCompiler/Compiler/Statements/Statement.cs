@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace DannyJoostCompiler
 {
-	public class Statement
+	public abstract class Statement
 	{
 		protected LinkedList<Node> compiledStatement;
 
@@ -12,7 +12,7 @@ namespace DannyJoostCompiler
 			compiledStatement = new LinkedList<Node>();
 		}
 
-		public abstract LinkedList<Node> Compile (ref LinkedListNode<Token> currentToken);
+		public abstract LinkedList<Node> Compile (LinkedListNode<Token> currentToken);
 	}
 }
 
