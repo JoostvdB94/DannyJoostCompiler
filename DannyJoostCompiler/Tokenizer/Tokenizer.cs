@@ -20,11 +20,16 @@ namespace DannyJoostCompiler
             RegisterToken(TokenEnumeration.If, "\\bif\\b");
             RegisterToken(TokenEnumeration.Else, "\\belse\\b");
             RegisterToken(TokenEnumeration.ClosedBracket, "}");
+            RegisterToken(TokenEnumeration.Comment, "//");
             RegisterToken(TokenEnumeration.OpenBracket, "\\{");
             RegisterToken(TokenEnumeration.OpenEllips, "\\(");
             RegisterToken(TokenEnumeration.CloseEllips, "\\)");
             RegisterToken(TokenEnumeration.Separator, ",");
             RegisterToken(TokenEnumeration.Equals, "==");
+            RegisterToken(TokenEnumeration.Plus, "\\+");
+            RegisterToken(TokenEnumeration.Minus, "\\-");
+            RegisterToken(TokenEnumeration.Multiply, "\\*");
+            RegisterToken(TokenEnumeration.DivideBy, "\\/");
             RegisterToken(TokenEnumeration.Assignment, "=");
             RegisterToken(TokenEnumeration.LesserThan, "<");
             RegisterToken(TokenEnumeration.Integer, "\\bint\\b");
@@ -49,12 +54,13 @@ namespace DannyJoostCompiler
             var bracketStack = new Stack<Token>();
             var statementStack = new Stack<Token>();
             var ellipsStack = new Stack<Token>();
-
+            bool commentFound = false;
             for (int lineNumber = 0; lineNumber < input.Length; lineNumber++)
             {
+                commentFound = false;
                 var target = input[lineNumber];
 
-                while (target.Length > 0)
+                while (target.Length > 0 && !commentFound)
                 {
                     foreach (var pair in TokenRegex)
                     {
@@ -64,6 +70,11 @@ namespace DannyJoostCompiler
 
                         if (match.Success)
                         {
+                            if(pair.Key == TokenEnumeration.Comment)
+                            {
+                                commentFound = true;
+                                break;
+                            }
                             if(pair.Key == TokenEnumeration.Unknown)
                             {
                                 Error(lineNumber, linePosition, "Illegal character found: " + match.Value);

@@ -34,13 +34,22 @@
     <Reference Include="Mono.C5" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Compiler\Nodes\ConditionalJump.cs" />
+    <Compile Include="Compiler\Nodes\JumpNode.cs" />
+    <Compile Include="Compiler\Statements\AssignmentStatement.cs" />
+    <Compile Include="Compiler\Statements\DivideByStatement.cs" />
+    <Compile Include="Compiler\Statements\ElseStatement.cs" />
+    <Compile Include="Compiler\Statements\IdentifierStatement.cs" />
+    <Compile Include="Compiler\Statements\MinusStatement.cs" />
+    <Compile Include="Compiler\Statements\MultiplyStatement.cs" />
+    <Compile Include="Compiler\Statements\PlusStatement.cs" />
+    <Compile Include="Datastructures\DoubleLinkedList.cs" />
     <Compile Include="DictionaryExtension\DictionaryExtension.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tokenizer\Tokenizer.cs" />
     <Compile Include="Tokenizer\TokenEnumeration.cs" />
     <Compile Include="Tokenizer\Token.cs" />
-    <Compile Include="Tokenizer\Tokenizer_old.cs" />
     <Compile Include="Compiler\Compiler.cs" />
     <Compile Include="Compiler\Statements\StatementFactory.cs" />
     <Compile Include="Compiler\Statements\Statement.cs" />
@@ -50,16 +59,26 @@
     <Compile Include="Compiler\Nodes\FunctionCalls\AbstractFunctionCall.cs" />
     <Compile Include="Compiler\Nodes\FunctionCalls\DirectFunctionCall.cs" />
     <Compile Include="Compiler\Nodes\FunctionCalls\FunctionCall.cs" />
-    <Compile Include="Compiler\Statements\Condition.cs" />
+    <Compile Include="Compiler\Statements\ConditionStatement.cs" />
     <Compile Include="Compiler\Nodes\DoNothingNode.cs" />
     <Compile Include="Compiler\Nodes\NodeFactory.cs" />
     <Compile Include="Compiler\Statements\IfStatement.cs" />
+    <Compile Include="VirtualMachine\Commands\BaseCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\PlusCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\ReturnToVariableCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\ConstantToReturnCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\DeclareVariableTypeCommand.cs" />
+    <Compile Include="VirtualMachine\NextNodeVisitor.cs" />
+    <Compile Include="VirtualMachine\NodeVisitor.cs" />
+    <Compile Include="VirtualMachine\Variable.cs" />
+    <Compile Include="VirtualMachine\VirtualMachine.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup />
   <ItemGroup>
-    <Folder Include="Factories\" />
-  </ItemGroup>
-  <ItemGroup>
+    <Content Include="Language2.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Language.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

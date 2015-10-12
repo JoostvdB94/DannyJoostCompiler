@@ -1,33 +1,39 @@
-﻿using System;
+﻿using DannyJoostCompiler.Datastructures;
+using System;
 using System.Collections.Generic;
 
 namespace DannyJoostCompiler
 {
 	public class WhileStatement:Statement
 	{
-		private LinkedList<Node> condition;
-		private LinkedList<Node> body;
+		private DoubleLinkedList condition;
+		private DoubleLinkedList body;
 
 		public WhileStatement ()
 		{
-			condition = new LinkedList<Node> ();
-			body = new LinkedList<Node> ();
+			condition = new DoubleLinkedList ();
+			body = new DoubleLinkedList ();
 
-			compiledStatement.AddLast(NodeFactory.create("DoNothing"));
-            foreach(var node in condition)
+			compiledStatement.AddLast(NodeFactory.Create("DoNothing"));
+
+            Node currentConditionNode = condition.First;
+            while(currentConditionNode != null)
             {
-                compiledStatement.AddLast(node);
+                compiledStatement.AddLast(currentConditionNode);
+                currentConditionNode = currentConditionNode.Next;
             }
-			compiledStatement.AddLast(NodeFactory.create("ConditionalJump")); // De body komt dus rechtstreeks na de conditionalJumpNode (dus op de .Next property)
-            foreach (var node in body)
+			compiledStatement.AddLast(NodeFactory.Create("ConditionalJump")); // De body komt dus rechtstreeks na de conditionalJumpNode (dus op de .Next property)
+            Node currentBodyNode = body.First;
+            while(currentBodyNode != null)
             {
-                compiledStatement.AddLast(node);
+                compiledStatement.AddLast(currentBodyNode);
+                currentBodyNode = currentBodyNode.Next;
             }
-            compiledStatement.AddLast(NodeFactory.create("JumpBack"));
-			compiledStatement.AddLast(NodeFactory.create("DoNothing"));
+            compiledStatement.AddLast(NodeFactory.Create("Jump"));
+			compiledStatement.AddLast(NodeFactory.Create("DoNothing"));
 		}
 
-		public override LinkedList<Node> Compile (LinkedListNode<Token> currentToken)
+		public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
 		{
 
 			int whileLevel = currentToken.Value.Level;

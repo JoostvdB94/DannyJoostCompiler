@@ -1,18 +1,26 @@
-﻿using System;
+﻿using DannyJoostCompiler.Datastructures;
+using System;
 using System.Collections.Generic;
 
 namespace DannyJoostCompiler
 {
 	public abstract class Statement
 	{
-		protected LinkedList<Node> compiledStatement;
+		protected DoubleLinkedList compiledStatement;
+        private static long _variableCounter = 0;
 
 		public Statement ()
 		{
-			compiledStatement = new LinkedList<Node>();
+			compiledStatement = new DoubleLinkedList();
 		}
 
-		public abstract LinkedList<Node> Compile (LinkedListNode<Token> currentToken);
+		public abstract DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken);
+
+        public string GetUniqueVariableName()
+        {
+            _variableCounter++;
+            return "$" + _variableCounter.ToString("D6");
+        }
 	}
 }
 

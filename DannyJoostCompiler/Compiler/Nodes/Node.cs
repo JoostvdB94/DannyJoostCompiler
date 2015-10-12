@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DannyJoostCompiler.VirtualMachine;
+using System;
 using System.Collections.Generic;
 
 namespace DannyJoostCompiler
@@ -7,15 +8,19 @@ namespace DannyJoostCompiler
 	{
 
         public string Identifier { get; set; }
+        public Node Next { get; set; }
+        public Node Previous { get; set; }
 
-		public Node ()
+        public Node ()
 		{
 		}
 
-        public virtual void SetupParameters(List<string> parameters)
+        public virtual void SetupParameters(List<Token> parameters)
         {
 
         }
+
+        public abstract void Accept(NodeVisitor visitor);
 
 		public abstract void Execute ();
 

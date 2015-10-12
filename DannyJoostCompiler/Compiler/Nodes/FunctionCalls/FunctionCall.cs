@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DannyJoostCompiler.VirtualMachine;
 
 namespace DannyJoostCompiler
 {
@@ -8,14 +9,14 @@ namespace DannyJoostCompiler
 
         public FunctionCall() { }
 
-		public FunctionCall (string functionName, List<string> parameters):base(functionName)
+		public FunctionCall (string functionName, List<Token> tokens):base(functionName)
 		{
-			this.Parameters = parameters;
+			this.Parameters = tokens;
 		}
        
-        public override void SetupParameters(List<string> parameters)
+        public override void SetupParameters(List<Token> tokens)
         {
-            this.Parameters = parameters; 
+            this.Parameters = tokens; 
         }
 
         public override Node Copy()
@@ -26,6 +27,11 @@ namespace DannyJoostCompiler
         public override void Execute()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Accept(NodeVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

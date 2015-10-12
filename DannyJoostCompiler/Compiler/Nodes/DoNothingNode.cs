@@ -1,4 +1,5 @@
 ﻿using System;
+using DannyJoostCompiler.VirtualMachine;
 
 namespace DannyJoostCompiler
 {
@@ -7,6 +8,11 @@ namespace DannyJoostCompiler
 		public DoNothingNode ()
 		{
 		}
+
+        public override void Accept(NodeVisitor visitor)
+        {
+            visitor.Visit(this);
+        }
 
         public override Node Copy()
         {

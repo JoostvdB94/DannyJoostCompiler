@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using DannyJoostCompiler.VirtualMachine;
 
 namespace DannyJoostCompiler
 {
@@ -7,7 +8,7 @@ namespace DannyJoostCompiler
 	{
         public DirectFunctionCall() { }
 
-        public override void SetupParameters(List<string> parameters)
+        public override void SetupParameters(List<Token> parameters)
         {
             Parameters = parameters;
         }
@@ -20,6 +21,11 @@ namespace DannyJoostCompiler
         public override void Execute()
         {
             throw new NotImplementedException();
+        }
+
+        public override void Accept(NodeVisitor visitor)
+        {
+            visitor.Visit(this);
         }
     }
 }

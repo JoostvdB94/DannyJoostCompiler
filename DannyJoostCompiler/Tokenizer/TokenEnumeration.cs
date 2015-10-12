@@ -4,8 +4,12 @@ namespace DannyJoostCompiler
 {
 	public enum TokenEnumeration
 	{
-		Unknown,
-		Identifier,
+        Unknown,
+        Plus,
+        Minus,
+        Multiply,
+        DivideBy,
+        Identifier,
 		Word,
 		Integer,
 		While,
@@ -45,7 +49,8 @@ namespace DannyJoostCompiler
 		ElseIf,
         FunctionCall,
         QuotedCharacter,
-        Separator
+        Separator,
+        Comment
     }
 }
 

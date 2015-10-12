@@ -1,39 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using DannyJoostCompiler.DictionaryExtension;
+using DannyJoostCompiler.Compiler.Statements;
 
 namespace DannyJoostCompiler
 {
 	public static class StatementFactory
 	{
-		public static Dictionary<TokenEnumeration, Statement> statements { private get; set; }
+        public static Dictionary<TokenEnumeration, Statement> Statements { private get; set; }
 		static StatementFactory ()
 		{
+            Statements = new Dictionary<TokenEnumeration, Statement>();
 			FillStatements (); 
 		}
 
-		public static Statement create(TokenEnumeration type){
-			Statement statement = statements.GetValue(type);
-            if (statement != null)
-            {
-                return statement;
-            }
-            throw new KeyNotFoundException("No class found with the name " + type);
+		public static Statement Create(TokenEnumeration type){
+            return Statements.GetValue(type);
         }
 
 		public static void FillStatements ()
 		{
-			statements.Add (TokenEnumeration.If, null);
-			statements.Add (TokenEnumeration.Else, null);
-			statements.Add (TokenEnumeration.While, null);
-			statements.Add (TokenEnumeration.Assignment, null);
+			Statements.Add (TokenEnumeration.If, new IfStatement());
+			Statements.Add (TokenEnumeration.Else, new ElseStatement());
+			Statements.Add (TokenEnumeration.While, new WhileStatement());
+			Statements.Add (TokenEnumeration.Assignment, new AssignmentStatement());
 
-			statements.Add (TokenEnumeration.Equals, null);
-			statements.Add (TokenEnumeration.GreaterThan, null);
-			statements.Add (TokenEnumeration.GreaterOrEquals, null);
-			statements.Add (TokenEnumeration.LesserThan, null);
-			statements.Add (TokenEnumeration.LesserOrEquals, null);
-		}
+			Statements.Add (TokenEnumeration.Equals, new ConditionStatement());
+			Statements.Add (TokenEnumeration.GreaterThan, new ConditionStatement());
+			Statements.Add (TokenEnumeration.GreaterOrEquals, new ConditionStatement());
+			Statements.Add (TokenEnumeration.LesserThan, new ConditionStatement());
+            Statements.Add(TokenEnumeration.LesserOrEquals, new ConditionStatement());
+
+            Statements.Add(TokenEnumeration.Plus, new PlusStatement());
+            Statements.Add(TokenEnumeration.Minus, new MinusStatement());
+            Statements.Add(TokenEnumeration.Multiply, new MultiplyStatement());
+            Statements.Add(TokenEnumeration.DivideBy, new DivideByStatement());
+
+            Statements.Add(TokenEnumeration.Integer, new IdentifierStatement());
+            Statements.Add(TokenEnumeration.Bool, new IdentifierStatement());
+            Statements.Add(TokenEnumeration.Double, new IdentifierStatement());
+            Statements.Add(TokenEnumeration.String, new IdentifierStatement());
+        }
 	}
 }
 
