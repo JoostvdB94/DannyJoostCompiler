@@ -13,7 +13,13 @@ namespace DannyJoostCompiler
             Statement assignmentBody = StatementFactory.Create(currentToken.Next.Value.Type);
             while(assignmentBody == null)
             {
-                currentToken = currentToken.Next;
+                if (currentToken.Next != null)
+                {
+                    currentToken = currentToken.Next;
+                } else
+                {
+                    break;
+                }
 				if (currentToken.Value.Type == TokenEnumeration.EOL) {
 					break;
 				}
@@ -32,10 +38,10 @@ namespace DannyJoostCompiler
 				}
 			} else {
 				//case x = 4
-				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall","C2R",new List<Token>{currentToken.Previous.Value}));
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall","C2R",new List<Token>{currentToken.Value}));
 			}
      
-			NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> () { Token.create (0, 0, TokenEnumeration.Unknown, variableToAssign, 0) });
+			compiledStatement.AddLast(NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> () { Token.create (0, 0, TokenEnumeration.Unknown, variableToAssign, 0) }));
             return compiledStatement;
         }
     }
