@@ -31,5 +31,16 @@ namespace DannyJoostCompiler.Datastructures
             }
             Last = node;
         }
+
+        public void AddListLast(DoubleLinkedList list)
+        {
+            var currentNode = list.First;
+
+            while(currentNode != null)
+            {
+                AddLast(currentNode);
+                currentNode = currentNode.Next;
+            }
+        }
     }
 }

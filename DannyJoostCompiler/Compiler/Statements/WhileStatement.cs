@@ -1,4 +1,5 @@
-﻿using DannyJoostCompiler.Datastructures;
+﻿using DannyJoostCompiler.Compiler.Nodes;
+using DannyJoostCompiler.Datastructures;
 using System;
 using System.Collections.Generic;
 
@@ -40,6 +41,18 @@ namespace DannyJoostCompiler
 
         public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
 		{
+            Node firstDoNothing = NodeFactory.Create("DoNothing");
+            Node firstDoNothingInsideWhile = NodeFactory.Create("DoNothing");
+
+            JumpNode insideWhileJumpNode = (JumpNode)NodeFactory.Create("Jump");
+            ConditionalJumpNode conditionalJumpNode = (ConditionalJumpNode)NodeFactory.Create("ConditionalJump");
+            Node lastDoNothing = NodeFactory.Create("DoNothing");
+            insideWhileJumpNode.JumpToNode = firstDoNothing;
+
+            conditionalJumpNode.FalseRoute = lastDoNothing;
+            conditionalJumpNode.TrueRoute = firstDoNothingInsideWhile;
+
+            compiledStatement.AddLast(firstDoNothing);
 
 			int whileLevel = currentToken.Value.Level;
 			List<TokenExpectation> expected = new List<TokenExpectation>()
@@ -52,6 +65,7 @@ namespace DannyJoostCompiler
 				new TokenExpectation(whileLevel + 1, TokenEnumeration.Unknown), // Body
 				new TokenExpectation(whileLevel, TokenEnumeration.ClosedBracket)
 			};
+                        
 			foreach (var expectation in expected) {
 				if (expectation.Level == whileLevel){
 					if (currentToken.Value.Type != expectation.TokenType && currentToken.Value.Type != TokenEnumeration.EOL){
@@ -60,25 +74,57 @@ namespace DannyJoostCompiler
 						currentToken = currentToken.Next;
 					}
 				}else if (expectation.Level > whileLevel){
-					while(currentToken.Value.Level > whileLevel)
-					{
-                        Statement conditionStatement = StatementFactory.Create(currentToken.Value.Type);
-                        if (conditionStatement != null)
+					if(condition.First == null)
+                    {
+                        //Check if condition is already filled, if not, fill it!
+                        while (currentToken.Value.Level > whileLevel)
                         {
-                            DoubleLinkedList conditionList = conditionStatement.Compile(ref currentToken);
-                            Node currentConditionNode = conditionList.First;
-                            while (currentConditionNode != null)
+                            Statement conditionStatement = StatementFactory.Create(currentToken.Value.Type);
+                            if (conditionStatement != null)
                             {
-                                //Toevoegen gevonden statementNodes
-                                compiledStatement.AddLast(currentConditionNode);
-                                currentConditionNode = currentConditionNode.Next;
+                                DoubleLinkedList conditionList = conditionStatement.Compile(ref currentToken);
+                                Node currentConditionNode = conditionList.First;
+                                while (currentConditionNode != null)
+                                {
+                                    //Toevoegen gevonden statementNodes
+                                    condition.AddLast(currentConditionNode);
+                                    currentConditionNode = currentConditionNode.Next;
+                                }
                             }
+                            currentToken = currentToken.Next;
                         }
-                        currentToken = currentToken.Next;
-                        
+                        compiledStatement.AddListLast(condition);
+                        condition.AddLast(conditionalJumpNode);
+                    }
+                    else
+                    {
+                        //Condition is filled, so now we are filling the body!
+                        body.AddLast(firstDoNothingInsideWhile);
+                        while (currentToken.Value.Level > whileLevel)
+                        {
+                            Statement conditionStatement = StatementFactory.Create(currentToken.Value.Type);
+                            if (conditionStatement != null)
+                            {
+                                DoubleLinkedList conditionList = conditionStatement.Compile(ref currentToken);
+                                Node currentConditionNode = conditionList.First;
+                                while (currentConditionNode != null)
+                                {
+                                    //Toevoegen gevonden statementNodes
+                                    body.AddLast(currentConditionNode);
+                                    currentConditionNode = currentConditionNode.Next;
+                                }
+                            }
+                            currentToken = currentToken.Next;
+                        }
+                        compiledStatement.AddListLast(body);
+                        body.AddLast(insideWhileJumpNode);
                     }
 				}
 			}
+
+            compiledStatement.AddLast(lastDoNothing);
+
+
 			return compiledStatement;
 		}
 	}

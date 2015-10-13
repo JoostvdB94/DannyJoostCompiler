@@ -9,6 +9,8 @@ namespace DannyJoostCompiler.Compiler.Nodes
 {
     public class JumpNode : Node
     {
+        public Node JumpToNode { get; internal set; }
+
         public override Node Copy()
         {
             return new JumpNode();

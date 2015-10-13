@@ -43,7 +43,7 @@ namespace DannyJoostCompiler.VirtualMachine
         public void Run(DoubleLinkedList list)
         {
             var currentNode = list.First;
-            NextNodeVisitor visitor = new NextNodeVisitor();
+            NextNodeVisitor visitor = new NextNodeVisitor(this);
 
             AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
             while(currentNode != null)

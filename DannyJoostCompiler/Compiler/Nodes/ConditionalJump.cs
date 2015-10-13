@@ -9,6 +9,9 @@ namespace DannyJoostCompiler.Compiler.Nodes
 {
     public class ConditionalJumpNode : Node
     {
+        public Node FalseRoute { get; set; }
+        public Node TrueRoute { get; set; }
+
         public override void Accept(NodeVisitor visitor)
         {
             visitor.Visit(this);
