@@ -12,7 +12,7 @@ namespace DannyJoostCompiler.VirtualMachine.Commands
         public void Execute(UltimateVirtualMachine vm, List<Token> parameters)
         {
 			if (vm.Variables.ContainsKey (parameters [0].Value)) {
-				vm.Variables.GetValue (parameters [0].Value).Value = vm.ReturnValue.Copy ();
+				vm.Variables.GetValue (parameters [0].Value).Value = vm.ReturnValue.Value;
 			} else {
 				vm.Variables.Add (parameters [0].Value, vm.ReturnValue.Copy ());
 			}

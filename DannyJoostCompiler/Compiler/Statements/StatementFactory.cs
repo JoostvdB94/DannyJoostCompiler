@@ -15,7 +15,13 @@ namespace DannyJoostCompiler
 		}
 
 		public static Statement Create(TokenEnumeration type){
-            return Statements.GetValue(type);
+            Statement statement = Statements.GetValue(type);
+
+            if (statement == null)
+            {
+                return null;
+            }
+            return statement.Copy();
         }
 
 		public static void FillStatements ()
@@ -36,10 +42,17 @@ namespace DannyJoostCompiler
             Statements.Add(TokenEnumeration.Multiply, new MultiplyStatement());
             Statements.Add(TokenEnumeration.DivideBy, new DivideByStatement());
 
-            Statements.Add(TokenEnumeration.Integer, new IdentifierStatement());
-            Statements.Add(TokenEnumeration.Bool, new IdentifierStatement());
-            Statements.Add(TokenEnumeration.Double, new IdentifierStatement());
-            Statements.Add(TokenEnumeration.String, new IdentifierStatement());
+            Statements.Add(TokenEnumeration.Integer, new DeclarationStatement());
+            Statements.Add(TokenEnumeration.Bool, new DeclarationStatement());
+            Statements.Add(TokenEnumeration.Double, new DeclarationStatement());
+            Statements.Add(TokenEnumeration.String, new DeclarationStatement());
+
+            Statements.Add(TokenEnumeration.Identifier, new IdentifierStatement());
+
+            Statements.Add(TokenEnumeration.Number, new ConstantStatement());
+            Statements.Add(TokenEnumeration.QuotedString, new ConstantStatement());
+
+            Statements.Add(TokenEnumeration.EOL, null);
         }
 	}
 }

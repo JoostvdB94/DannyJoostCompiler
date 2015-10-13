@@ -15,7 +15,7 @@ namespace DannyJoostCompiler
         {
             TokenRegex = new Dictionary<TokenEnumeration, string>();
 
-            RegisterToken(TokenEnumeration.QuotedString, "\".*\"");
+            RegisterToken(TokenEnumeration.QuotedString, "\\\"(?:[^\\\"\\\\]|\\.)*\\\"");
             RegisterToken(TokenEnumeration.QuotedCharacter, "\'.\'");
             RegisterToken(TokenEnumeration.If, "\\bif\\b");
             RegisterToken(TokenEnumeration.Else, "\\belse\\b");
@@ -26,14 +26,14 @@ namespace DannyJoostCompiler
             RegisterToken(TokenEnumeration.CloseEllips, "\\)");
             RegisterToken(TokenEnumeration.Separator, ",");
             RegisterToken(TokenEnumeration.Equals, "==");
-            RegisterToken(TokenEnumeration.Plus, "\\+");
-            RegisterToken(TokenEnumeration.Minus, "\\-");
             RegisterToken(TokenEnumeration.Multiply, "\\*");
             RegisterToken(TokenEnumeration.DivideBy, "\\/");
             RegisterToken(TokenEnumeration.Assignment, "=");
             RegisterToken(TokenEnumeration.LesserThan, "<");
+            RegisterToken(TokenEnumeration.Plus, "\\+");
+            RegisterToken(TokenEnumeration.Minus, "\\-");
             RegisterToken(TokenEnumeration.Integer, "\\bint\\b");
-            RegisterToken(TokenEnumeration.Number, "\\d+");
+            RegisterToken(TokenEnumeration.Number, "\\-?\\d+");
             RegisterToken(TokenEnumeration.String, "\\bstring\\b");
             RegisterToken(TokenEnumeration.While, "\\bwhile\\b");
             RegisterToken(TokenEnumeration.FunctionCall, "\\w+(?=\\s*\\()");
@@ -70,21 +70,26 @@ namespace DannyJoostCompiler
 
                         if (match.Success)
                         {
+                            string matchedContent = match.Value;
                             if(pair.Key == TokenEnumeration.Comment)
                             {
                                 commentFound = true;
                                 break;
                             }
+                            if(pair.Key == TokenEnumeration.QuotedString)
+                            {
+                               matchedContent = matchedContent.Substring(1, matchedContent.Length -2);
+                            }
                             if(pair.Key == TokenEnumeration.Unknown)
                             {
-                                Error(lineNumber, linePosition, "Illegal character found: " + match.Value);
+                                Error(lineNumber, linePosition, "Illegal character found: " + matchedContent);
                             }
                             Token leftPartner = null;
                             Token token = null; 
                             
                             if (pair.Key != TokenEnumeration.WhiteSpace)
                             {
-                                token = Token.create(lineNumber, linePosition, pair.Key, match.Value, ellipsStack.Count + bracketStack.Count + statementStack.Count);
+                                token = Token.create(lineNumber, linePosition, pair.Key, matchedContent, ellipsStack.Count + bracketStack.Count + statementStack.Count);
                                 tokens.AddLast(token);
                                 if (leftPartner != null)
                                 {
@@ -97,7 +102,7 @@ namespace DannyJoostCompiler
                             {
                                 if (bracketStack.Count == 0)
                                 {
-                                    Error(lineNumber + 1, linePosition + 1, "Invalide token '" + match.Value + "'.");
+                                    Error(lineNumber + 1, linePosition + 1, "Invalide token '" + matchedContent + "'.");
                                 }
                                 else
                                 {
@@ -112,7 +117,7 @@ namespace DannyJoostCompiler
                             {
                                 if (ellipsStack.Count == 0)
                                 {
-                                    Error(lineNumber + 1, linePosition + 1, "Invalide token '" + match.Value + "'.");
+                                    Error(lineNumber + 1, linePosition + 1, "Invalide token '" + matchedContent + "'.");
                                 }
                                 else
                                 {
@@ -128,7 +133,7 @@ namespace DannyJoostCompiler
                                 if (statementStack.Count == 0 ||
                                     statementStack.Peek().Type != TokenEnumeration.If )
                                 {
-                                    Error(lineNumber, linePosition, "Invalide token '" + match.Value + "'.");
+                                    Error(lineNumber, linePosition, "Invalide token '" + matchedContent + "'.");
                                 }
                                 else
                                 {
@@ -158,6 +163,7 @@ namespace DannyJoostCompiler
                         }
                     }
                 }
+                tokens.AddLast(Token.create(lineNumber, 0, TokenEnumeration.EOL, "", 0));
             }
             if (statementStack.Count > 0)
             {

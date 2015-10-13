@@ -1,22 +1,24 @@
-﻿using System;
+﻿using DannyJoostCompiler.Datastructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DannyJoostCompiler.Datastructures;
 
 namespace DannyJoostCompiler.Compiler.Statements
 {
-    public class IdentifierStatement : Statement
+    public class DeclarationStatement : Statement
     {
         public override Statement Copy()
         {
-            return new IdentifierStatement();
+            return new DeclarationStatement();
         }
 
         public override DoubleLinkedList Compile(ref LinkedListNode<Token> currentToken)
         {
-            compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "V2R", new List<Token>() { Token.create(0, 0, currentToken.Value.Type, currentToken.Value.Value, 0) }));
+            compiledStatement.AddLast(NodeFactory.Create("FunctionCall", "DeclareVariableType", new List<Token>() { currentToken.Value, currentToken.Next.Value }));
+
+            currentToken = currentToken.Next;
             return compiledStatement;
         }
     }

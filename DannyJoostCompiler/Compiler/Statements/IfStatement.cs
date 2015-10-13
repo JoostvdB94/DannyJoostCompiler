@@ -13,6 +13,11 @@ namespace DannyJoostCompiler
 			condition = new DoubleLinkedList ();
 		}
 
+        public override Statement Copy()
+        {
+            return new IfStatement();
+        }
+
         public override DoubleLinkedList Compile(ref LinkedListNode<Token> currentToken)
         {
 			int ifLevel = currentToken.Value.Level;

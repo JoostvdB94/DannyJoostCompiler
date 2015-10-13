@@ -21,7 +21,7 @@ namespace DannyJoostCompiler
 
         public override Node Copy()
         {
-            return (FunctionCall)MemberwiseClone();
+            return new FunctionCall();
         }
 
         public override void Execute()

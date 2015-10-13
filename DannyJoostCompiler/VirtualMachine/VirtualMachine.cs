@@ -26,7 +26,11 @@ namespace DannyJoostCompiler.VirtualMachine
         {
             Commands.Add("C2R", new ConstantToReturnCommand());
             Commands.Add("R2V", new ReturnToVariableCommand());
+            Commands.Add("V2R", new VariableToReturnCommand());
             Commands.Add("Add", new PlusCommand());
+            Commands.Add("Minus", new MinusCommand());
+            Commands.Add("DivideBy", new DivideByCommand());
+            Commands.Add("Multiply", new MultiplyCommand());
             Commands.Add("DeclareVariableType", new DeclareVariableTypeCommand());
         }
 
@@ -35,13 +39,14 @@ namespace DannyJoostCompiler.VirtualMachine
             var currentNode = list.First;
             NextNodeVisitor visitor = new NextNodeVisitor();
 
-            while (currentNode != null)
+            AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
+            while(currentNode != null)
             {
-                AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
                 if(functionNode != null)
                 {
                     Commands[functionNode.Identifier].Execute(this, functionNode.Parameters);
                 }
+                functionNode = currentNode as AbstractFunctionCall;
                 //currentNode.execute()?
                 currentNode.Accept(visitor);
                 currentNode = visitor.NextNode;

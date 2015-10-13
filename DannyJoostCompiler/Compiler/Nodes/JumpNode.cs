@@ -11,7 +11,7 @@ namespace DannyJoostCompiler.Compiler.Nodes
     {
         public override Node Copy()
         {
-            return (JumpNode)MemberwiseClone();
+            return new JumpNode();
         }
 
         public override void Execute()

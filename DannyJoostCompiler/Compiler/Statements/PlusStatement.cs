@@ -6,37 +6,42 @@ namespace DannyJoostCompiler
 {
     public class PlusStatement : Statement
     {
+
+        public override Statement Copy()
+        {
+            return new PlusStatement();
+        }
+
         public override DoubleLinkedList Compile(ref LinkedListNode<Token> currentToken)
         {
-            string leftHandValue = currentToken.Previous.Value.Value;
-            string rightHandValue = currentToken.Next.Value.Value;
+            string leftHandValue = GetUniqueVariableName();
+            string rightHandValue = GetUniqueVariableName();
 
-            if (currentToken.Previous.Value.Type == TokenEnumeration.Number)
-            {
-                string uniqueVariableName = GetUniqueVariableName();
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "C2R", new List<Token>() { currentToken.Previous.Value }));
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0,0,TokenEnumeration.Unknown, uniqueVariableName,0) }));
-                leftHandValue = uniqueVariableName;
-            } else if(currentToken.Previous.Value.Type != TokenEnumeration.Identifier)
-            {
-                leftHandValue = GetUniqueVariableName();
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, leftHandValue, 0) }));
-            }
+            //linkerkant opgeslagen als $xxx
+            compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, leftHandValue, 0) }));
 
-            if (currentToken.Next.Value.Type == TokenEnumeration.Number)
+            currentToken = currentToken.Next;
+
+            Statement statement = StatementFactory.Create(currentToken.Value.Type);
+            if(statement != null)
             {
-                string uniqueVariableName = GetUniqueVariableName();
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "C2R", new List<Token>() { currentToken.Next.Value }));
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, uniqueVariableName, 0) }));
-                rightHandValue = uniqueVariableName;
+                var compiledNodes = statement.Compile(ref currentToken);
+
+                var currentCompiledNode = compiledNodes.First;
+
+                while(currentCompiledNode != null)
+                {
+                    compiledStatement.AddLast(currentCompiledNode);
+
+                    currentCompiledNode = currentCompiledNode.Next;
+                }
             }
-            else if (currentToken.Next.Value.Type != TokenEnumeration.Identifier)
-            {
-                rightHandValue = GetUniqueVariableName();
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, rightHandValue, 0) }));
-            }
+            //rechterkant opgeslagen als $xxx
+            compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, rightHandValue, 0) }));
+
             compiledStatement.AddLast(NodeFactory.Create("FunctionCall", "Add", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, leftHandValue, 0), Token.create(0, 0, TokenEnumeration.Unknown, rightHandValue, 0) }));
 
+            
             return compiledStatement;
         }
     }

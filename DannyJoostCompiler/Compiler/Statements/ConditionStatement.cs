@@ -6,8 +6,13 @@ namespace DannyJoostCompiler
 {
 	public class ConditionStatement:Statement
 	{
-		
-		public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
+
+        public override Statement Copy()
+        {
+            return new ConditionStatement();
+        }
+
+        public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
 		{
 			Token leftHandValue = currentToken.Previous.Value;
 			Token rightHandValue = currentToken.Next.Value;

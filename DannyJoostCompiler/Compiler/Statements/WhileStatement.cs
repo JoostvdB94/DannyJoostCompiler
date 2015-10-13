@@ -33,7 +33,12 @@ namespace DannyJoostCompiler
 			compiledStatement.AddLast(NodeFactory.Create("DoNothing"));
 		}
 
-		public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
+        public override Statement Copy()
+        {
+            return new WhileStatement();
+        }
+
+        public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
 		{
 
 			int whileLevel = currentToken.Value.Level;

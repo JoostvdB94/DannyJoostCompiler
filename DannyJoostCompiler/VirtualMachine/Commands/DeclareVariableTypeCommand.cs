@@ -10,11 +10,11 @@ namespace DannyJoostCompiler.VirtualMachine
         {
             if (vm.Variables.ContainsKey(parameters[1].Value))
             {
-                Console.WriteLine(parameters[1].Value + " was allready declared!");
+                Console.WriteLine(parameters[1].Value + " was already declared!");
             }
             else
             {
-                vm.Variables.Add(parameters[1].Value, new Variable() { Value = 0, type = parameters[0].Type });
+                vm.Variables.Add(parameters[1].Value, new Variable() { Value = "", type = parameters[0].Type });
             }
            
         }

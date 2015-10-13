@@ -39,9 +39,11 @@
     <Compile Include="Compiler\Statements\AssignmentStatement.cs" />
     <Compile Include="Compiler\Statements\DivideByStatement.cs" />
     <Compile Include="Compiler\Statements\ElseStatement.cs" />
+    <Compile Include="Compiler\Statements\DeclarationStatement.cs" />
     <Compile Include="Compiler\Statements\IdentifierStatement.cs" />
     <Compile Include="Compiler\Statements\MinusStatement.cs" />
     <Compile Include="Compiler\Statements\MultiplyStatement.cs" />
+    <Compile Include="Compiler\Statements\ConstantStatement.cs" />
     <Compile Include="Compiler\Statements\PlusStatement.cs" />
     <Compile Include="Datastructures\DoubleLinkedList.cs" />
     <Compile Include="DictionaryExtension\DictionaryExtension.cs" />
@@ -64,10 +66,14 @@
     <Compile Include="Compiler\Nodes\NodeFactory.cs" />
     <Compile Include="Compiler\Statements\IfStatement.cs" />
     <Compile Include="VirtualMachine\Commands\BaseCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\DivideByCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\MinusCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\MultiplyCommand.cs" />
     <Compile Include="VirtualMachine\Commands\PlusCommand.cs" />
     <Compile Include="VirtualMachine\Commands\ReturnToVariableCommand.cs" />
     <Compile Include="VirtualMachine\Commands\ConstantToReturnCommand.cs" />
     <Compile Include="VirtualMachine\Commands\DeclareVariableTypeCommand.cs" />
+    <Compile Include="VirtualMachine\Commands\VariableToReturnCommand.cs" />
     <Compile Include="VirtualMachine\NextNodeVisitor.cs" />
     <Compile Include="VirtualMachine\NodeVisitor.cs" />
     <Compile Include="VirtualMachine\Variable.cs" />

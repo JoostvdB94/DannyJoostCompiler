@@ -16,6 +16,8 @@ namespace DannyJoostCompiler
 
 		public abstract DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken);
 
+        public abstract Statement Copy();
+
         public string GetUniqueVariableName()
         {
             _variableCounter++;
