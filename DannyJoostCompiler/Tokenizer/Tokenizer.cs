@@ -89,7 +89,12 @@ namespace DannyJoostCompiler
                             
                             if (pair.Key != TokenEnumeration.WhiteSpace)
                             {
-                                token = Token.create(lineNumber, linePosition, pair.Key, matchedContent, ellipsStack.Count + bracketStack.Count + statementStack.Count);
+                                int level = ellipsStack.Count + bracketStack.Count + statementStack.Count;
+                                if(pair.Key == TokenEnumeration.ClosedBracket || pair.Key == TokenEnumeration.CloseEllips)
+                                {
+                                    level--;
+                                }
+                                token = Token.create(lineNumber, linePosition, pair.Key, matchedContent, level);
                                 tokens.AddLast(token);
                                 if (leftPartner != null)
                                 {
@@ -163,7 +168,7 @@ namespace DannyJoostCompiler
                         }
                     }
                 }
-                tokens.AddLast(Token.create(lineNumber, 0, TokenEnumeration.EOL, "", 0));
+                tokens.AddLast(Token.create(lineNumber, 0, TokenEnumeration.EOL, "", bracketStack.Count + ellipsStack.Count));
             }
             if (statementStack.Count > 0)
             {

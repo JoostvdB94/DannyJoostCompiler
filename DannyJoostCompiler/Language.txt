@@ -1,5 +1,5 @@
-﻿int y = 10
-string x = 5 * y / 5 / 2
-//while(x < 10) {
-//	x = x + 1
-//}
+﻿//int y = 10
+int x = 5
+while(x < 10) {
+	x = x + 1
+}

@@ -31,6 +31,12 @@ namespace DannyJoostCompiler.VirtualMachine
             Commands.Add("Minus", new MinusCommand());
             Commands.Add("DivideBy", new DivideByCommand());
             Commands.Add("Multiply", new MultiplyCommand());
+            Commands.Add("GreatherThanOrEqualTo", new GreatherThanOrEqualTo());
+            Commands.Add("GreatherThan", new GreatherThanCommand());
+            Commands.Add("LesserThan", new LesserThanCommand());
+            Commands.Add("LesserThanOrEqualTo", new LesserThanOrEqualToCommand());
+            Commands.Add("Equals", new EqualsCommand());
+            Commands.Add("NotEquals", new NotEqualsCommand());
             Commands.Add("DeclareVariableType", new DeclareVariableTypeCommand());
         }
 
