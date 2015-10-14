@@ -2,7 +2,9 @@
 int x = 5
 while(x < 10) {
 	if(x > 5) {
-		print(y+x," Ja!"," Of niet..")
+		print(x," Ja!"," Hoger dan 5!")
+	}else{
+		print(x + " nog niet hoger dan 5!")
 	}
 	x = x + 1
 }
