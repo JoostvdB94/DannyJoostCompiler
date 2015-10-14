@@ -40,6 +40,8 @@ namespace DannyJoostCompiler.VirtualMachine
 			Commands.Add ("Equals", new EqualsCommand ());
 			Commands.Add ("NotEquals", new NotEqualsCommand ());
 			Commands.Add ("DeclareVariableType", new DeclareVariableTypeCommand ());
+			Commands.Add ("print", new PrintCommand ());
+
 		}
 
 		public void Run (DoubleLinkedList list)

@@ -84,7 +84,7 @@ namespace DannyJoostCompiler
 							Token token = null; 
                             
 							if (pair.Key != TokenEnumeration.WhiteSpace) {
-								int level = ellipsStack.Count + bracketStack.Count + statementStack.Count;
+								int level = ellipsStack.Count + bracketStack.Count;
 								if (pair.Key == TokenEnumeration.ClosedBracket || pair.Key == TokenEnumeration.CloseEllips) {
 									level--;
 								}
