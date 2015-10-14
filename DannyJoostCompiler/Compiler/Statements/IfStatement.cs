@@ -27,10 +27,10 @@ namespace DannyJoostCompiler
 			Node firstDoNothing = NodeFactory.Create ("DoNothing");
 			Node firstDoNothingInsideIf = NodeFactory.Create ("DoNothing");
 
-			JumpNode insideWhileJumpNode = (JumpNode)NodeFactory.Create ("Jump");
+			JumpNode insideIfJumpNode = (JumpNode)NodeFactory.Create ("Jump");
 			ConditionalJumpNode conditionalJumpNode = (ConditionalJumpNode)NodeFactory.Create ("ConditionalJump");
 			Node lastDoNothing = NodeFactory.Create ("DoNothing");
-			insideWhileJumpNode.JumpToNode = lastDoNothing;
+			insideIfJumpNode.JumpToNode = lastDoNothing;
 
 			conditionalJumpNode.FalseRoute = lastDoNothing;
 			conditionalJumpNode.TrueRoute = firstDoNothingInsideIf;
@@ -90,9 +90,27 @@ namespace DannyJoostCompiler
 							}
 							currentToken = currentToken.Next;
 						}
-						body.AddLast (insideWhileJumpNode);
+						body.AddLast (insideIfJumpNode);
 						compiledStatement.AddListLast (body);
 					}
+				}
+			}
+
+			if (currentToken.Next.Value.Type == TokenEnumeration.Else) {
+				currentToken = currentToken.Next;
+				Statement elseStatement = StatementFactory.Create (currentToken.Value.Type);
+				if (elseStatement != null) {
+					DoubleLinkedList elseLinkedList = elseStatement.Compile (ref currentToken);
+					compiledStatement.AddListLast (elseLinkedList);
+				}
+			}
+
+			if (currentToken.Next.Value.Type == TokenEnumeration.ElseIf) {
+				currentToken = currentToken.Next;
+				Statement elseIfStatement = StatementFactory.Create (currentToken.Value.Type);
+				if (elseIfStatement != null) {
+					DoubleLinkedList elseIfLinkedList = elseIfStatement.Compile (ref currentToken);
+					compiledStatement.AddListLast (elseIfLinkedList);
 				}
 			}
 

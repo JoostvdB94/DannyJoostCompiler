@@ -49,16 +49,21 @@ namespace DannyJoostCompiler.VirtualMachine
 			var currentNode = list.First;
 			NextNodeVisitor visitor = new NextNodeVisitor (this);
 
-			AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
 			while (currentNode != null) {
-				functionNode = currentNode as AbstractFunctionCall;
+				AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
 				if (functionNode != null) {
-					Commands [functionNode.Identifier].Execute (this, functionNode.Parameters);
+					BaseCommand foundCommand;
+					if (Commands.TryGetValue (functionNode.Identifier, out foundCommand)) {
+						foundCommand.Execute (this, functionNode.Parameters);
+					} else {
+						Console.WriteLine ("No function named: " + functionNode.Identifier);
+					}
 				}
 				//currentNode.execute()?
 				currentNode.Accept (visitor);
 				currentNode = visitor.NextNode;
 			}
+			Console.WriteLine ("##End of code!##");
 		}
 	}
 }

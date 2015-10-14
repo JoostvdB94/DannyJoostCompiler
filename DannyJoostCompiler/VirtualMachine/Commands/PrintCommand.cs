@@ -31,8 +31,9 @@ namespace DannyJoostCompiler
 					}
 					break;
 				}
-				Console.WriteLine (valueToPrint);
+				Console.Write (valueToPrint);
 			}
+			Console.WriteLine ();
 		}
 
 		#endregion

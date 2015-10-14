@@ -12,21 +12,22 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-            var lines = (File.ReadAllLines(Environment.CurrentDirectory + @"/Language.txt"));
-            Tokenizer tokenizer = new Tokenizer();
-            LinkedList<Token> tokens = tokenizer.Tokenize(lines);
+			Console.WriteLine ("##Begin of code!##");
+			var lines = (File.ReadAllLines (Environment.CurrentDirectory + @"/Language.txt"));
+			Tokenizer tokenizer = new Tokenizer ();
+			LinkedList<Token> tokens = tokenizer.Tokenize (lines);
 
-            foreach(var token in tokens)
+			/*foreach(var token in tokens)
             {
                 Console.WriteLine(token.ToString());
-            }
-            //Console.ReadKey();
+            }*/
+			//Console.ReadKey();
 
-            NodeCompiler compiler = new NodeCompiler();
-            DoubleLinkedList nodes = compiler.CompileLinkedList(tokens);
+			NodeCompiler compiler = new NodeCompiler ();
+			DoubleLinkedList nodes = compiler.CompileLinkedList (tokens);
 
-            UltimateVirtualMachine vm = new UltimateVirtualMachine();
-            vm.Run(nodes);
-        }
-    }
+			UltimateVirtualMachine vm = new UltimateVirtualMachine ();
+			vm.Run (nodes);
+		}
+	}
 }

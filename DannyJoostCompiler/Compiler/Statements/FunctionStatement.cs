@@ -15,30 +15,57 @@ namespace DannyJoostCompiler.Compiler.Statements
 		public override DoubleLinkedList Compile (ref System.Collections.Generic.LinkedListNode<Token> currentToken)
 		{
 			Token functionCall = currentToken.Value;
-			LinkedListNode<Token> openEllips = currentToken.Next;
-			LinkedListNode<Token> closeEllips = currentToken.Next;
+			Token openEllips = currentToken.Next.Value;
+			Token closeEllips = openEllips.Partner;
+
 			List<Token> parameters = new List<Token> ();
+			compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "C2R", new List<Token> (){ Token.create (0, 0, TokenEnumeration.Unknown, "", 0) }));
 
-			currentToken = openEllips;
+			//Skip the (
+			currentToken = currentToken.Next;
 
-			//Search for parameters
-			while (!currentToken.Equals (closeEllips)) {
-				if (currentToken.Value.Type != TokenEnumeration.Separator) { 
-					//We don't want the comma's
-					Statement conditionStatement = StatementFactory.Create (currentToken.Value.Type);
-					if (conditionStatement != null) {
-						DoubleLinkedList conditionList = conditionStatement.Compile (ref currentToken);
-						Node currentConditionNode = conditionList.First;
-						while (currentConditionNode != null) {
-							//Toevoegen gevonden statementNodes
-							compiledStatement.AddLast (currentConditionNode);
-							currentConditionNode = currentConditionNode.Next;
+			if (currentToken.Next.Value != closeEllips) {
+				//We now know it has parameters
+				currentToken = currentToken.Next;
+
+				while (currentToken.Value.Type != TokenEnumeration.Separator && currentToken.Value.Type != closeEllips.Type) {
+					Statement firstParamStatement = StatementFactory.Create (currentToken.Value.Type);
+					if (firstParamStatement != null) {
+						DoubleLinkedList firstParamList = firstParamStatement.Compile (ref currentToken);
+						compiledStatement.AddListLast (firstParamList);
+					}
+					currentToken = currentToken.Next;
+				}
+
+				Token oneParam = Token.create (0, 0, TokenEnumeration.Identifier, GetUniqueVariableName (), 0);
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> (){ oneParam }));
+				parameters.Add (oneParam);
+		
+
+				if (currentToken.Value.Type == TokenEnumeration.Separator) {
+					//Search for more parameters
+					//Skip the Separator
+					currentToken = currentToken.Next;
+					while (currentToken.Value != closeEllips) {
+						if (currentToken.Value.Type != TokenEnumeration.Separator) { 
+							//We don't want to compile the comma's
+							while (currentToken.Value.Type != TokenEnumeration.Separator && currentToken.Value.Type != closeEllips.Type) {
+								Statement nextParamStatement = StatementFactory.Create (currentToken.Value.Type);
+								if (nextParamStatement != null) {
+									DoubleLinkedList nextParamList = nextParamStatement.Compile (ref currentToken);
+									compiledStatement.AddListLast (nextParamList);
+								}
+								currentToken = currentToken.Next;
+							}
+							Token nextParam = Token.create (0, 0, TokenEnumeration.Identifier, GetUniqueVariableName (), 0);
+							compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> (){ nextParam }));
+							parameters.Add (nextParam);
+						} else {
+							currentToken = currentToken.Next;	
 						}
 					}
 				}
-				currentToken = currentToken.Next;
 			}
-
 			compiledStatement.AddLast (NodeFactory.Create ("FunctionCall", functionCall.Value, parameters));
 			return compiledStatement;
 		}
