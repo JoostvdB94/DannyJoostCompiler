@@ -1,12 +1,17 @@
-﻿<Properties StartupItem="DannyJoostCompiler/DannyJoostCompiler.csproj" RefactoringSettings.EnableRefactorings="True">
+﻿<Properties StartupItem="DannyJoostCompiler/DannyJoostCompiler.csproj" RefactoringSettings.EnableRefactorings="True" GitUserInfo="UsingGIT">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug|x86" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="DannyJoostCompiler/Tokenizer.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="DannyJoostCompiler/Program.cs">
     <Files>
-      <File FileName="DannyJoostCompiler/Tokenizer.cs" Line="1" Column="1" />
+      <File FileName="DannyJoostCompiler/Compiler/Compiler.cs" Line="32" Column="1" />
+      <File FileName="DannyJoostCompiler/Program.cs" Line="21" Column="1" />
+      <File FileName="DannyJoostCompiler/Compiler/Statements/WhileStatement.cs" Line="133" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/Compiler/Statements/WhileStatement.cs" line="125" column="1" />
+      <Breakpoint file="/home/joost/CSharp/DannyJoostCompiler/DannyJoostCompiler/Program.cs" line="21" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

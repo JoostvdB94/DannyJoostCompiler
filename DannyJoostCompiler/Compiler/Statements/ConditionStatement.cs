@@ -7,19 +7,18 @@ namespace DannyJoostCompiler
 	public class ConditionStatement:Statement
 	{
 
-        public override Statement Copy()
-        {
-            return new ConditionStatement();
-        }
+		public override Statement Copy ()
+		{
+			return new ConditionStatement ();
+		}
 
-        public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
+		public override DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken)
 		{
 			Token leftHandValue = currentToken.Previous.Value;
 			Token rightHandValue = currentToken.Next.Value;
 			Token operatorCharacter = currentToken.Value;
-			compiledStatement.AddLast (NodeFactory.Create("DoNothing"));
-            AddNodesForToken(leftHandValue);
-            AddNodesForToken(rightHandValue);
+			AddNodesForToken (ref leftHandValue);
+			AddNodesForToken (ref rightHandValue);
 
 			FunctionCall operatorFunction;
 
@@ -48,20 +47,22 @@ namespace DannyJoostCompiler
 			}
 			
 			compiledStatement.AddLast (operatorFunction);
-			compiledStatement.AddLast (NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, GetUniqueVariableName(), 0) }));
-            //Do Nothing?
-
-            return compiledStatement;
+			currentToken = currentToken.Next;
+			return compiledStatement;
 		}
 
-		private void AddNodesForToken(Token token){
+		private void AddNodesForToken (ref Token token)
+		{
 			if (token.Type == TokenEnumeration.Number) {
-				compiledStatement.AddLast (NodeFactory.Create("DirectFunctionCall", "C2R", new List<Token>() { token }));
-				compiledStatement.AddLast (NodeFactory.Create("DirectFunctionCall", "R2V", new List<Token>() { Token.create(0, 0, TokenEnumeration.Unknown, GetUniqueVariableName(), 0) }));
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "C2R", new List<Token> () { token }));
+				token = Token.create (0, 0, TokenEnumeration.Unknown, GetUniqueVariableName (), 0);
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> () { token }));
 			}
 			if (token.Type == TokenEnumeration.Identifier) {
-                compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "V2R", new List<Token>() { token }));
-            }
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "V2R", new List<Token> () { token }));
+				token = Token.create (0, 0, TokenEnumeration.Unknown, GetUniqueVariableName (), 0);
+				compiledStatement.AddLast (NodeFactory.Create ("DirectFunctionCall", "R2V", new List<Token> () { token }));
+			}
 		}
 	}
 }

@@ -1,5 +1,8 @@
 ﻿//int y = 10
 int x = 5
 while(x < 10) {
+	if(x > 8) {
+		print(x)
+	}
 	x = x + 1
 }
