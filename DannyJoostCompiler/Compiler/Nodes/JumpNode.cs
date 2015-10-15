@@ -7,23 +7,23 @@ using System.Threading.Tasks;
 
 namespace DannyJoostCompiler.Compiler.Nodes
 {
-    public class JumpNode : Node
-    {
-        public Node JumpToNode { get; internal set; }
+	public class JumpNode : Node
+	{
+		public Node JumpToNode { get; set; }
 
-        public override Node Copy()
-        {
-            return new JumpNode();
-        }
+		public override Node Copy ()
+		{
+			return new JumpNode ();
+		}
 
-        public override void Execute()
-        {
-            throw new NotImplementedException();
-        }
+		public override void Execute ()
+		{
+			throw new NotImplementedException ();
+		}
 
-        public override void Accept(NodeVisitor visitor)
-        {
-            visitor.Visit(this);
-        }
-    }
+		public override void Accept (NodeVisitor visitor)
+		{
+			visitor.Visit (this);
+		}
+	}
 }

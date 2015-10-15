@@ -25,7 +25,7 @@ namespace DannyJoostCompiler
 			foreach (var expectation in expected) {
 				if (expectation.Level == elseLevel) {
 					if (currentToken.Value.Type != expectation.TokenType && currentToken.Value.Type != TokenEnumeration.EOL) {
-						throw new Exception (String.Format ("Unexpected end of statement, expected {0}", expectation.TokenType));
+						throw new Exception (String.Format ("Unexpected end of statement, expected {0} on position: {1}:{2}", expectation.TokenType, currentToken.Value.LineNumber, currentToken.Value.LinePosition));
 					} else {
 						currentToken = currentToken.Next;
 					}

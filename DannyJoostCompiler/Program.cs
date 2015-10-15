@@ -17,10 +17,9 @@ namespace DannyJoostCompiler
 			Tokenizer tokenizer = new Tokenizer ();
 			LinkedList<Token> tokens = tokenizer.Tokenize (lines);
 
-			/*foreach(var token in tokens)
-            {
-                Console.WriteLine(token.ToString());
-            }*/
+			foreach (var token in tokens) {
+				Console.WriteLine (token.ToString ());
+			}
 			//Console.ReadKey();
 
 			NodeCompiler compiler = new NodeCompiler ();

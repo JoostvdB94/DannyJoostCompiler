@@ -17,8 +17,8 @@
     <DefineConstants>DEBUG;</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <Externalconsole>true</Externalconsole>
     <PlatformTarget>x86</PlatformTarget>
+    <ConsolePause>false</ConsolePause>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <DebugType>full</DebugType>
@@ -84,6 +84,8 @@
     <Compile Include="VirtualMachine\NodeVisitor.cs" />
     <Compile Include="VirtualMachine\Variable.cs" />
     <Compile Include="VirtualMachine\VirtualMachine.cs" />
+    <Compile Include="Compiler\Statements\FunctionStatement.cs" />
+    <Compile Include="VirtualMachine\Commands\PrintCommand.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup />
