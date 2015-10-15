@@ -17,7 +17,7 @@ namespace DannyJoostCompiler.Compiler.Statements
 
         public override DoubleLinkedList Compile(ref LinkedListNode<Token> currentToken)
         {
-            compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "C2R", new List<Token>() { currentToken.Value}));
+            compiledStatement.AddLast(NodeFactory.Create("DirectFunctionCall", "C2R", new List<Token>() { currentToken.Value }));
             return compiledStatement;
         }
     }

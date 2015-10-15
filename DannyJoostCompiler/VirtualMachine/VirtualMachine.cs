@@ -3,6 +3,7 @@ using DannyJoostCompiler.Datastructures;
 using DannyJoostCompiler.VirtualMachine;
 using DannyJoostCompiler.VirtualMachine.Commands;
 using System.Collections.Generic;
+using DannyJoostCompiler.DictionaryExtension;
 using System;
 
 namespace DannyJoostCompiler.VirtualMachine
@@ -52,14 +53,13 @@ namespace DannyJoostCompiler.VirtualMachine
 			while (currentNode != null) {
 				AbstractFunctionCall functionNode = currentNode as AbstractFunctionCall;
 				if (functionNode != null) {
-					BaseCommand foundCommand;
-					if (Commands.TryGetValue (functionNode.Identifier, out foundCommand)) {
+					BaseCommand foundCommand = Commands.GetValue(functionNode.Identifier);
+					if (foundCommand != null) {
 						foundCommand.Execute (this, functionNode.Parameters);
 					} else {
 						Console.WriteLine ("No function named: " + functionNode.Identifier);
 					}
 				}
-				//currentNode.execute()?
 				currentNode.Accept (visitor);
 				currentNode = visitor.NextNode;
 			}

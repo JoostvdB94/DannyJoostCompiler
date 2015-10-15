@@ -11,22 +11,17 @@ namespace DannyJoostCompiler
 
 		public FunctionCall (string functionName, List<Token> tokens):base(functionName)
 		{
-			this.Parameters = tokens;
+			Parameters = tokens;
 		}
        
         public override void SetupParameters(List<Token> tokens)
         {
-            this.Parameters = tokens; 
+            Parameters = tokens; 
         }
 
         public override Node Copy()
         {
             return new FunctionCall();
-        }
-
-        public override void Execute()
-        {
-            throw new NotImplementedException();
         }
 
         public override void Accept(NodeVisitor visitor)

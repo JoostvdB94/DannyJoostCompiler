@@ -18,11 +18,6 @@ namespace DannyJoostCompiler
             return new DirectFunctionCall();
         }
 
-        public override void Execute()
-        {
-            throw new NotImplementedException();
-        }
-
         public override void Accept(NodeVisitor visitor)
         {
             visitor.Visit(this);

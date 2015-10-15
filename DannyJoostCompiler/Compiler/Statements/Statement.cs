@@ -4,17 +4,17 @@ using System.Collections.Generic;
 
 namespace DannyJoostCompiler
 {
-	public abstract class Statement
-	{
-		protected DoubleLinkedList compiledStatement;
+    public abstract class Statement
+    {
+        protected DoubleLinkedList compiledStatement;
         private static long _variableCounter = 0;
 
-		public Statement ()
-		{
-			compiledStatement = new DoubleLinkedList();
-		}
+        public Statement()
+        {
+            compiledStatement = new DoubleLinkedList();
+        }
 
-		public abstract DoubleLinkedList Compile (ref LinkedListNode<Token> currentToken);
+        public abstract DoubleLinkedList Compile(ref LinkedListNode<Token> currentToken);
 
         public abstract Statement Copy();
 
@@ -23,6 +23,6 @@ namespace DannyJoostCompiler
             _variableCounter++;
             return "$" + _variableCounter.ToString("D6");
         }
-	}
+    }
 }
 

@@ -21,10 +21,5 @@ namespace DannyJoostCompiler.Compiler.Nodes
         {
             return new ConditionalJumpNode();
         }
-
-        public override void Execute()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

@@ -12,13 +12,12 @@ namespace DannyJoostCompiler
 	{
 		public static void Main (string[] args)
 		{
-			Console.WriteLine ("##Begin of code!##");
-			var lines = (File.ReadAllLines (Environment.CurrentDirectory + @"/Language.txt"));
+			var lines = File.ReadAllLines (Environment.CurrentDirectory + @"/Language.txt");
 			Tokenizer tokenizer = new Tokenizer ();
-			LinkedList<Token> tokens = tokenizer.Tokenize (lines);
+			LinkedList<Token> tokens = tokenizer.Tokenize(lines);
 
 			foreach (var token in tokens) {
-				Console.WriteLine (token.ToString ());
+			//	Console.WriteLine (token.ToString ());
 			}
 			//Console.ReadKey();
 

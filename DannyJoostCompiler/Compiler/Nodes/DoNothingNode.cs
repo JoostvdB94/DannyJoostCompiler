@@ -18,11 +18,6 @@ namespace DannyJoostCompiler
         {
             return new DoNothingNode();
         }
-        
-        public override void Execute ()
-		{
-			
-		}
 	}
 }
 
